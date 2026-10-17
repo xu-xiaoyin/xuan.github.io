@@ -1,0 +1,537 @@
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>你的瞳孔是我眷恋的第二颗心脏</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,BlinkMacSystemFont,serif;}
+body{overflow:hidden;}
+.main-page{width:100vw;height:100vh;position:relative;background:#c9c9c9;background-image:url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 61c1.105 0 2-.895 2-2s-.895-2-2-2-2 1.343-2 2 .895 2 2 2z' fill='%23999' fill-opacity='0.15' fill-rule='evenodd'/%3E%3C/svg%3E");
+padding-top:40px;display:flex;flex-direction:column;align-items:center;
+}
+.avatar-group{display:flex;gap:16px;margin-bottom:20px;align-items:center;}
+.avatar{width:72px;height:72px;border-radius:50%;overflow:hidden;border:2px solid #fff;}
+.avatar img{width:100%;height:100%;object-fit:cover;}
+.distance-text{color:#444;font-size:16px;margin-bottom:24px;}
+.vinyl-wrap{width:320px;height:320px;position:relative;margin-bottom:32px;}
+.vinyl{width:100%;height:100%;border-radius:50%;background:#111;display:flex;align-items:center;justify-content:center;
+animation:rotateDisk 12s linear infinite;
+animation-play-state:paused;
+}
+.vinyl.playing{
+animation-play-state:running;
+}
+@keyframes rotateDisk{
+0%{transform:rotate(0deg);}
+100%{transform:rotate(360deg);}
+}
+.vinyl-cover{width:200px;height:200px;border-radius:50%;overflow:hidden;}
+.vinyl-cover img{width:100%;height:100%;object-fit:cover;}
+.progress-wrap{width:90%;max-width:360px;margin-bottom:12px;}
+.progress-bar{width:100%;height:3px;background:#aaaaaa;border-radius:3px;}
+.progress{width:0%;height:100%;background:#333;border-radius:3px;transition:none;}
+.time-row{display:flex;justify-content:space-between;font-size:12px;color:#555;margin-top:6px;}
+.control-bar{width:90%;max-width:360px;display:flex;justify-content:space-between;align-items:center;margin-top:24px;}
+.ctrl-icon{font-size:28px;color:#333;cursor:pointer;user-select:none;}
+.play-icon{font-size:36px;user-select:none;}
+.arrow-btn-1{position:fixed;bottom:32px;right:32px;width:56px;height:56px;border-radius:50%;background:#44444477;display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;cursor:pointer;z-index:10;box-shadow:0 4px 12px rgba(0,0,0,0.25);transition:0.3s;user-select:none;}
+.arrow-btn-1:hover{transform:scale(1.08);background:#55555599;}
+.page-archive{position:fixed;top:0;left:0;width:100vw;height:100vh;background:#222;z-index:20;padding:24px;overflow-y:auto;opacity:0;visibility:hidden;transition:opacity 0.4s ease,visibility 0.4s ease;display:flex;align-items:center;justify-content:center;}
+.page-archive.active{opacity:1;visibility:visible;}
+.close-archive{position:absolute;top:24px;right:24px;font-size:26px;cursor:pointer;color:#fff;z-index:2;user-select:none;}
+.archive-card{width:min(92%,420px);border-radius:20px;overflow:hidden;background:linear-gradient(to bottom,#bbbbbb,#111111);padding:40px 24px;position:relative;box-shadow:0 0 40px rgba(0,0,0,0.5);}
+.archive-card::before{content:"";position:absolute;top:0;left:0;width:100%;height:100%;background-image:url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");opacity:0.08;pointer-events:none;}
+.archive-card::after{content:"";position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(ellipse at 20% 40%,rgba(255,255,255,0.08),transparent 50%),radial-gradient(ellipse at 80% 70%,rgba(255,255,255,0.06),transparent 55%);pointer-events:none;}
+.card-inner{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;}
+.banner-avatar{width:120px;height:120px;border-radius:50%;overflow:hidden;border:3px solid #ffffffdd;margin-bottom:24px;}
+.banner-avatar img{width:100%;height:100%;object-fit:cover;}
+.name-title{font-size:42px;color:#fff;font-weight:bold;margin-bottom:24px;}
+.tag-group{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-bottom:32px;}
+.tag{border:1px solid #ffffff44;background:#ffffff18;color:#fff;padding:6px 14px;border-radius:6px;font-size:14px;}
+.desc-text{color:#fff;font-size:18px;text-align:center;margin-bottom:40px;}
+.enter-btn{width:54px;height:54px;border-radius:8px;background:#111111cc;color:#fff;border:none;font-size:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;user-select:none;}
+.page-tabs{position:fixed;top:0;left:0;width:100vw;height:100vh;background:#ffffff;z-index:30;padding:32px 24px;overflow-y:auto;opacity:0;visibility:hidden;transition:opacity 0.4s ease,visibility 0.4s ease;}
+.page-tabs.active{opacity:1;visibility:visible;}
+.tabs-header{position:relative;text-align:center;margin-bottom:16px;}
+.tabs-header h2{font-size:28px;font-weight:bold;color:#222;}
+.close-tabs{position:absolute;top:0;right:0;font-size:32px;cursor:pointer;color:#222;user-select:none;}
+.divider-line{width:100%;height:1px;background:#222;margin:16px 0 32px;}
+.tab-bar{display:flex;flex-wrap:nowrap;gap:10px;justify-content:center;width:100%;margin-bottom:48px;}
+.tab-item{flex:0 0 auto;width:auto;white-space:nowrap;padding:8px 12px;text-align:center;border-radius:12px;font-size:14px;line-height:1.4;color:#222;background:#eeeeee;border:1px solid #dddddd;cursor:pointer;transition:0.2s;user-select:none;}
+.tab-item.active{background:#cccccc;color:#111;}
+.content-block{color:#444;line-height:2;max-width:560px;margin:0 auto;}
+.tab-content{display:none;}
+.tab-content.active{display:block;}
+.tab-content p{text-align:center;font-size:17px;margin:14px 0;}
+.intro-img{
+display:block;
+width:200px;
+margin:16px auto;
+border-radius:12px;
+}
+.style-wrap{
+width:100%;
+text-align:center;
+}
+.style-top-img{
+width:100%;
+border-radius:6px;
+margin-bottom:24px;
+}
+.style-text-item{
+text-align:center;
+margin:18px 0;
+}
+.line-div{
+width:60%;
+height:1px;
+background:#999;
+margin:20px auto;
+}
+.wave-blue{
+color:#3366ff;
+letter-spacing:2px;
+}
+.wave-red{
+color:#ff3333;
+letter-spacing:2px;
+}
+.style-bottom-img{
+display:block;
+width:220px;
+margin:40px auto 0;
+}
+.dialog-wrap{
+width:100%;
+}
+.dialog-top-notice{
+text-align:center;
+font-size:20px;color:#333;
+margin-bottom:28px;
+padding-bottom:12px;
+border-bottom:1px solid #ccc;
+}
+.letter-row{
+display:grid;
+grid-template-columns: repeat(4,1fr);
+gap:12px;
+margin-bottom:36px;
+}
+.letter-card{
+text-align:center;
+}
+.letter-avatar{
+width:64px;height:64px;border-radius:50%;margin:0 auto 8px;overflow:hidden;
+}
+.letter-avatar img{
+width:100%;height:100%;object-fit:cover;
+}
+.letter-text{display:none;}
+.section-title{
+font-size:24px;color:#222;margin:44px 0 16px;text-align:center;
+}
+.section-subtitle{
+font-size:20px;color:#444;margin-bottom:20px;text-align:center;
+}
+.img-grid3{
+display:grid;grid-template-columns: repeat(3,1fr);gap:10px;margin-bottom:12px;
+}
+.img-grid2{
+display:grid;grid-template-columns: repeat(2,1fr);gap:10px;margin-bottom:12px;
+}
+.dialog-screenshot{
+width:100%;border-radius:8px;
+}
+.gift-part-title{
+text-align:center;
+font-size:22px;color:#222;font-weight:bold;
+margin:40px 0 20px;letter-spacing:2px;
+}
+.gift-note{
+text-align:center;
+font-size:15px;color:#555;
+margin-bottom:24px;line-height:1.8;
+}
+.gift-grid{
+display:grid;
+grid-template-columns: repeat(3,1fr);
+gap:12px;margin-bottom:14px;
+}
+.gift-grid.final{
+grid-template-columns: repeat(2,1fr);
+max-width:420px;margin:0 auto;
+}
+.gift-card{
+border-radius:12px;overflow:hidden;
+background:#f7f7f7;border:1px solid #e5e5e5;
+box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+.gift-card img{
+width:100%;display:block;border-radius:12px;
+}
+/* ========== 头牌卡 1-2-2-1错落布局 ========== */
+.head-card-wrap{
+width:100%;
+}
+.head-card-title{
+text-align:center;font-size:24px;color:#222;font-weight:bold;
+margin-bottom:12px;letter-spacing:3px;
+}
+.head-card-subtitle{
+text-align:center;font-size:15px;color:#666;margin-bottom:28px;
+}
+.head-row{
+display:flex;justify-content:center;gap:14px;margin-bottom:16px;
+}
+.head-row.one{
+justify-content:center;
+}
+.head-card-item{
+width:calc(50% - 7px);max-width:240px;
+border-radius:16px;overflow:hidden;
+background:#fafafa;border:1px solid #ececec;
+box-shadow:0 4px 14px rgba(0,0,0,0.08);
+}
+.head-row.one .head-card-item{
+width:100%;max-width:320px;
+}
+.head-card-item img{
+width:100%;display:block;border-radius:16px;
+}
+.head-card-note{
+text-align:center;font-size:14px;color:#555;
+margin-top:24px;line-height:1.8;
+}
+@media(max-width:480px){
+.letter-row{grid-template-columns: repeat(2,1fr);}
+.img-grid3{grid-template-columns: repeat(2,1fr);}
+.gift-grid{grid-template-columns: repeat(2,1fr);}
+.head-row{gap:10px;}
+.head-card-item{width:calc(50% - 5px);}
+.head-row.one .head-card-item{max-width:90%;}
+}
+</style>
+</head>
+<body>
+<div class="main-page">
+<div class="avatar-group">
+<div class="avatar"><img src="54ff2af83fe8addf445b96142b4484c7.jpg"></div>
+<div class="avatar"><img src="微信图片_20261015214901_67_194.jpg"></div>
+</div>
+<div class="distance-text">相距520m，一起听了1314分钟</div>
+<div class="vinyl-wrap">
+<div class="vinyl" id="vinylDisk">
+<div class="vinyl-cover"><img src="c3a5bfaf6a9ebf65a3bb37a9820144fc.jpg"></div>
+</div>
+</div>
+<div class="progress-wrap">
+<div class="progress-bar"><div class="progress" id="progressDom"></div></div>
+<div class="time-row"><span id="currentTime">00:00</span><span>05:20</span></div>
+</div>
+<div class="control-bar">
+<div class="ctrl-icon"></div>
+<div class="ctrl-icon">⏮</div>
+<div class="ctrl-icon play-icon" id="playBtn">▶</div>
+<div class="ctrl-icon">⏭</div>
+<div class="ctrl-icon">☰</div>
+</div>
+</div>
+<div class="arrow-btn-1" id="openArchive">→</div>
+<div class="page-archive" id="archivePage">
+<div class="close-archive" id="closeArchive">✕</div>
+<div class="archive-card">
+<div class="card-inner">
+<div class="banner-avatar"><img src="7469664d34c8a3870ea91b7ca8bac2d5.jpg"></div>
+<div class="name-title">鹤闻野</div>
+<div class="tag-group">
+<span class="tag">#逗猫</span>
+<span class="tag">#调情</span>
+<span class="tag">#热脸贱</span>
+<span class="tag">#专一</span>
+<span class="tag">#温柔</span>
+</div>
+<div class="desc-text">不如亲自来见我</div>
+<button class="enter-btn" id="openTabPage">→</button>
+</div>
+</div>
+</div>
+<div class="page-tabs" id="tabPage">
+<div class="tabs-header">
+<h2>鹤闻野</h2>
+<div class="close-tabs" id="closeTab">✕</div>
+</div>
+<div class="divider-line"></div>
+<div class="tab-bar">
+<div class="tab-item active" data-tab="tab1">自介</div>
+<div class="tab-item" data-tab="tab2">风格</div>
+<div class="tab-item" data-tab="tab3">话术</div>
+<div class="tab-item" data-tab="tab4">板赠</div>
+<div class="tab-item" data-tab="tab5">头牌卡</div>
+</div>
+<div class="content-block">
+<div class="tab-content active" id="tab1">
+<p>鹤闻野</p>
+<p>摩羯座 I/ENTJ 19 Le-T</p>
+<p>情感状态：七无好女人</p>
+<p>常驻：信纸 十年 雾山影主部A级</p>
+<p>曾通关：愚戏 观宴 蛇漪 素雪II</p>
+<img class="intro-img" src="image.jpeg">
+</div>
+<div class="tab-content" id="tab2">
+<div class="style-wrap">
+<img class="style-top-img" src="image1.jpeg">
+<div class="style-text-item">
+<p>主</p>
+<p>钓系暧昧拉扯 温柔年上引导 白切黑 恶俗下流情话</p>
+</div>
+<div class="style-text-item">
+<p>副</p>
+<p>热脸贱狗1 日常高恋 年下傲娇妹感 恶趣味 流氓挑逗</p>
+</div>
+<div class="line-div"></div>
+<div class="style-text-item">
+<p>关键词</p>
+<p>白话/高剖/轻文艺/微擦动描 /中高恋/高擦</p>
+</div>
+<div class="style-text-item">
+<p>上位》平权=下位</p>
+</div>
+<div class="style-text-item">
+<p>多为姐恋 特殊要求提前告知</p>
+</div>
+<div class="style-text-item">
+<p>常驻建模：白斗/蝙蝠斗 桂冠耳正0.6</p>
+<img class="style-bottom-img" src="image2.jpeg">
+</div>
+</div>
+</div>
+<div class="tab-content" id="tab3">
+<div class="dialog-wrap">
+<div class="dialog-top-notice">想要陪评给我发送 “轩轾” 即可</div>
+<div class="letter-row">
+<div class="letter-card">
+<div class="letter-avatar"><img src="话术/image3.jpeg"></div>
+</div>
+<div class="letter-card">
+<div class="letter-avatar"><img src="话术/image4.jpeg"></div>
+</div>
+<div class="letter-card">
+<div class="letter-avatar"><img src="话术/image5.jpeg"></div>
+</div>
+<div class="letter-card">
+<div class="letter-avatar"><img src="话术/image6.jpeg"></div>
+</div>
+</div>
+<div class="letter-row">
+<div class="letter-card">
+<div class="letter-avatar"><img src="话术/image7.jpeg"></div>
+</div>
+<div class="letter-card">
+<div class="letter-avatar"><img src="话术/image8.jpeg"></div>
+</div>
+<div class="letter-card">
+<div class="letter-avatar"><img src="话术/image9.jpeg"></div>
+</div>
+<div class="letter-card">
+<div class="letter-avatar"><img src="话术/image10.jpeg"></div>
+</div>
+</div>
+<div class="section-title">期待我站在你面前的样子吗</div>
+<div class="section-subtitle">风格：热脸贱 / 恶趣味</div>
+<div class="img-grid3">
+<img class="dialog-screenshot" src="话术/image11.jpeg">
+<img class="dialog-screenshot" src="话术/image12.jpeg">
+<img class="dialog-screenshot" src="话术\image13.jpeg">
+</div>
+<div class="img-grid3">
+<img class="dialog-screenshot" src="话术\14.jpeg">
+<img class="dialog-screenshot" src="话术\15.jpeg">
+<img class="dialog-screenshot" src="话术\16.jpeg">
+</div>
+<div class="section-title">风格：日常 / 挑逗</div>
+<div class="img-grid3">
+<img class="dialog-screenshot" src="话术/17.jpeg">
+<img class="dialog-screenshot" src="话术/29.jpeg">
+<img class="dialog-screenshot" src="话术\18.jpeg">
+</div>
+<div class="img-grid3">
+<img class="dialog-screenshot" src="话术\19.jpeg">
+<img class="dialog-screenshot" src="话术\20.jpeg">
+<img class="dialog-screenshot" src="话术\21.jpeg">
+</div>
+<div class="section-title">温柔安抚向</div>
+<div class="img-grid3">
+<img class="dialog-screenshot" src="话术\22.jpeg">
+<img class="dialog-screenshot" src="话术\23.jpeg">
+<img class="dialog-screenshot" src="话术\24.jpeg">
+</div>
+<div class="section-title">狗1</div>
+<div class="img-grid2">
+<img class="dialog-screenshot" src="话术\25.jpeg">
+<img class="dialog-screenshot" src="话术/26.jpeg">
+</div>
+<div class="section-title">下位妹感</div>
+<div class="img-grid2">
+<img class="dialog-screenshot" src="话术/27.jpeg">
+<img class="dialog-screenshot" src="话术\28.jpeg">
+</div>
+</div>
+</div>
+<div class="tab-content" id="tab4">
+<div class="gift-part-title">别人眼中万分之一的我</div>
+<div class="gift-grid">
+<div class="gift-card"><img src="板赠\1.jpeg"></div>
+<div class="gift-card"><img src="板赠\2.jpeg"></div>
+<div class="gift-card"><img src="板赠\3.jpeg"></div>
+<div class="gift-card"><img src="板赠\4.jpeg"></div>
+<div class="gift-card"><img src="板赠\5.jpeg"></div>
+<div class="gift-card"><img src="板赠\6.jpeg"></div>
+<div class="gift-card"><img src="板赠\7.jpeg"></div>
+<div class="gift-card"><img src="板赠\8.jpeg"></div>
+<div class="gift-card"><img src="板赠\9.jpeg"></div>
+<div class="gift-card"><img src="板赠\10.jpeg"></div>
+<div class="gift-card"><img src="板赠\11.jpeg"></div>
+<div class="gift-card"><img src="板赠\12.jpeg"></div>
+<div class="gift-card"><img src="板赠\13.png"></div>
+<div class="gift-card"><img src="板赠\14.jpeg"></div>
+<div class="gift-card"><img src="板赠\15.jpeg"></div>
+<div class="gift-card"><img src="板赠\16.jpeg"></div>
+<div class="gift-card"><img src="板赠\17.jpeg"></div>
+<div class="gift-card"><img src="板赠\18.png"></div>
+<div class="gift-card"><img src="板赠\19.jpeg"></div>
+<div class="gift-card"><img src="板赠\20.jpeg"></div>
+<div class="gift-card"><img src="板赠\21.jpeg"></div>
+<div class="gift-card"><img src="板赠\22.jpeg"></div>
+<div class="gift-card"><img src="板赠\23.jpeg"></div>
+<div class="gift-card"><img src="板赠\24.jpeg"></div>
+<div class="gift-card"><img src="板赠\25.jpeg"></div>
+<div class="gift-card"><img src="板赠\26.jpeg"></div>
+<div class="gift-card"><img src="板赠\27.jpeg"></div>
+<div class="gift-card"><img src="板赠\28.jpeg"></div>
+<div class="gift-card"><img src="板赠\29.webp"></div>
+<div class="gift-card"><img src="板赠\30.jpeg"></div>
+<div class="gift-card"><img src="板赠\31.jpeg"></div>
+<div class="gift-card"><img src="板赠\32.jpeg"></div>
+<div class="gift-card"><img src="板赠\33.jpeg"></div>
+<div class="gift-card"><img src="板赠\35.jpeg"></div>
+<div class="gift-card"><img src="板赠\36.jpeg"></div>
+<div class="gift-card"><img src="板赠\37.jpeg"></div>
+<div class="gift-card"><img src="板赠\38.jpeg"></div>
+<div class="gift-card"><img src="板赠\39.jpeg"></div>
+<div class="gift-card"><img src="板赠\40.jpeg"></div>
+<div class="gift-card"><img src="板赠\41.jpeg"></div>
+<div class="gift-card"><img src="板赠\42.jpeg"></div>
+<div class="gift-card"><img src="板赠\43.jpeg"></div>
+<div class="gift-card"><img src="板赠\44.jpeg"></div>
+<div class="gift-card"><img src="板赠\45.jpeg"></div>
+<div class="gift-card"><img src="板赠\46.png"></div>
+<div class="gift-card"><img src="板赠\47.jpeg"></div>
+<div class="gift-card"><img src="板赠\48.jpeg"></div>
+<div class="gift-card"><img src="板赠\49.jpeg"></div>
+<div class="gift-card"><img src="板赠\50.jpeg"></div>
+<div class="gift-card"><img src="板赠\51.jpeg"></div>
+<div class="gift-card"><img src="板赠\52.jpeg"></div>
+</div>
+<div class="gift-part-title">一些赠礼</div>
+<div class="gift-grid final">
+<div class="gift-card"><img src="板赠\53.jpeg"></div>
+<div class="gift-card"><img src="板赠\54.jpeg"></div>
+<div class="gift-card"><img src="板赠\55.jpeg"></div>
+<div class="gift-card"><img src="板赠\56.jpeg"></div>
+</div>
+</div>
+<div class="tab-content" id="tab5">
+<div class="head-card-wrap">
+<div class="head-card-title">头牌卡</div>
+<div class="head-card-subtitle">专属展示卡片 · 随机掉落</div>
+<!-- 1 2 2 1 布局 -->
+<div class="head-row one">
+<div class="head-card-item">
+<img src="头牌\1.png">
+</div>
+</div>
+<div class="head-row">
+<div class="head-card-item">
+<img src="头牌/2.jpeg">
+</div>
+<div class="head-card-item">
+<img src="头牌/3.jpeg">
+</div>
+</div>
+<div class="head-row">
+<div class="head-card-item">
+<img src="头牌\4.jpeg">
+</div>
+<div class="head-card-item">
+<img src="头牌\5.jpeg">
+</div>
+</div>
+<div class="head-row one">
+<div class="head-card-item">
+<img src="头牌\6.jpeg">
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+const openArchive = document.getElementById('openArchive');
+const archivePage = document.getElementById('archivePage');
+const closeArchive = document.getElementById('closeArchive');
+openArchive.onclick = ()=> archivePage.classList.add('active');
+closeArchive.onclick = ()=> archivePage.classList.remove('active');
+const openTabPage = document.getElementById('openTabPage');
+const tabPage = document.getElementById('tabPage');
+const closeTab = document.getElementById('closeTab');
+openTabPage.onclick = ()=> {
+tabPage.classList.add('active');
+tabs.forEach(i=>i.classList.remove('active'));
+tabContents.forEach(c=>c.classList.remove('active'));
+document.querySelector('[data-tab="tab1"]').classList.add('active');
+document.getElementById('tab1').classList.add('active');
+};
+closeTab.onclick = ()=> tabPage.classList.remove('active');
+const tabs = document.querySelectorAll('.tab-item');
+const tabContents = document.querySelectorAll('.tab-content');
+tabs.forEach(tab=>{
+tab.onclick = ()=>{
+tabs.forEach(i=>i.classList.remove('active'));
+tabContents.forEach(c=>c.classList.remove('active'));
+tab.classList.add('active');
+document.getElementById(tab.dataset.tab).classList.add('active');
+}
+})
+const playBtn = document.getElementById('playBtn');
+const vinylDisk = document.getElementById('vinylDisk');
+const progressDom = document.getElementById('progressDom');
+const currentTimeDom = document.getElementById('currentTime');
+let isPlaying = false;
+let timer = null;
+const totalSecond = 5 * 60 + 20;
+let currentSec = 0;
+playBtn.onclick = ()=>{
+isPlaying = !isPlaying;
+if(isPlaying){
+playBtn.textContent = "⏸";
+vinylDisk.classList.add('playing');
+timer = setInterval(()=>{
+currentSec++;
+if(currentSec >= totalSecond){
+currentSec = 0;
+}
+const percent = (currentSec / totalSecond)*100;
+progressDom.style.width = percent + "%";
+let m = Math.floor(currentSec / 60);
+let s = currentSec %60;
+currentTimeDom.innerText = String(m).padStart(2,'0') + ":" + String(s).padStart(2,'0');
+},1000)
+}else{
+playBtn.textContent = "▶";
+vinylDisk.classList.remove('playing');
+clearInterval(timer);
+}
+}
+</script>
+</body>
+</html>
